@@ -64,9 +64,9 @@ class FastMediaClient {
 
     onWidevineReady(version, lastVersion) {
         this.mainWindow = this.createWindow(this.type, this.options)
-        //this.mainWindow.loadURL(this.store.get('startPageUrl'))
+        this.mainWindow.loadURL(this.store.get('startPageUrl'))
         //TODO: back right loadURL
-        this.mainWindow.loadURL('https://www.netflix.com/watch/81325589?trackId=251726442&tctx=0%2C0%2C4804aafc-bbef-40d5-b95b-25476011b6ff-84441094%2C%2C6e75bde6-0564-4371-80e6-bbbcebf89988_ROOT%2C')
+        //this.mainWindow.loadURL('https://www.netflix.com/watch/81325589?trackId=251726442&tctx=0%2C0%2C4804aafc-bbef-40d5-b95b-25476011b6ff-84441094%2C%2C6e75bde6-0564-4371-80e6-bbbcebf89988_ROOT%2C')
 
         if (this.options?.player != undefined)
             this.player = new this.options.player(this.mainWindow, ipcMain)
@@ -85,7 +85,7 @@ class FastMediaClient {
         this.mainWindow.show()
         this.mainWindow.focus()
         //TODO: remove open dev tools
-        this.mainWindow.webContents.openDevTools()
+        //this.mainWindow.webContents.openDevTools()
     }
 
     onMainWindowClose() {
