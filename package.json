@@ -1,0 +1,22 @@
+{
+  "name": "electron-fast-media-client",
+  "version": "1.0.0",
+  "description": "Electron based module for fastest way of media-browser client creating",
+  "main": "index.js",
+  "scripts": {
+    "start": "electron --inspect .",
+    "test": "NODE_ENV=test ./node_modules/.bin/mocha ./test/*.js"
+  },
+  "author": "Aleksandr Miroshnikov",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "github:castlabs/electron-releases#v13.1.8-wvvmp",
+    "mocha": "^9.0.3",
+    "sinon": "^11.1.2",
+    "spectron": "^15.0.0"
+  },
+  "dependencies": {
+    "electron-store": "^8.0.0",
+    "url-parse": "^1.5.3"
+  }
+}
