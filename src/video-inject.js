@@ -51,6 +51,7 @@ function lookForVideoHide() {
         ipcRenderer.send('EVENT_HIDE')
 
         clearInterval(interval)
+        lookForVideo()
     }, 250)
 }
 
