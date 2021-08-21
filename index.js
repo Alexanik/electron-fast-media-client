@@ -7,6 +7,7 @@ const Language = require('./src/language')
 const AudioPlayer = require('./src/audio-player')
 const VideoPlayer = require('./src/video-player')
 const TouchbarContoller = require('./src/touchbar-controller')
+const ShortcutsController = require('./src/shortcuts-controller')
 const Player = require('./src/player')
 
 class FastMediaClient {
@@ -95,8 +96,6 @@ class FastMediaClient {
         })
 
         this.mainWindow.loadURL(this.store.get('startPageUrl'))
-        //TODO: back right loadURL
-        //this.mainWindow.loadURL('https://www.netflix.com/watch/81325589?trackId=251726442&tctx=0%2C0%2C4804aafc-bbef-40d5-b95b-25476011b6ff-84441094%2C%2C6e75bde6-0564-4371-80e6-bbbcebf89988_ROOT%2C')
 
         if (this.options?.player != undefined)
             this.player = new this.options.player(this.mainWindow, ipcMain)
@@ -106,6 +105,8 @@ class FastMediaClient {
             this.player = new AudioPlayer(this.mainWindow, ipcMain)
 
         this.touchbar = new TouchbarContoller(this.player)
+
+        this.shortcuts = new ShortcutsController(this.player)
 
         this.player.on('ready', this.onPlayerReady.bind(this))
         this.player.on('hide', this.onPlayerHide.bind(this))
@@ -117,8 +118,6 @@ class FastMediaClient {
 
         if (this.options?.openDevTools === true)
             this.mainWindow.webContents.openDevTools()
-        //TODO: remove open dev tools
-        //this.mainWindow.webContents.openDevTools()
     }
 
     onMainWindowClose() {
