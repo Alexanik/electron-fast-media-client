@@ -34,7 +34,6 @@ function lookForVideo() {
         ipcRenderer.send('EVENT_READY', paused, volume, duration, currentTime)
 
         clearInterval(interval)
-        lookForVideoHide()
     }, 250)
 }
 
@@ -51,7 +50,6 @@ function lookForVideoHide() {
         ipcRenderer.send('EVENT_HIDE')
 
         clearInterval(interval)
-        lookForVideo()
     }, 250)
 }
 
@@ -94,3 +92,5 @@ window.onload = lookForVideo()
 ipcRenderer.on('EVENT_PLAY', play)
 ipcRenderer.on('EVENT_PAUSE', pause)
 ipcRenderer.on('EVENT_SEEK', seek)
+ipcRenderer.on('EVENT_LOOK_FOR_VIDEO', lookForVideo)
+ipcRenderer.on('EVENT_LOOK_FOR_VIDEO_HIDE', lookForVideoHide)

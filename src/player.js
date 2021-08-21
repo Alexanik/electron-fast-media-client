@@ -38,10 +38,24 @@ class Player extends EventEmitter {
         this.currentTime = currentTime
     }
 
-    onReady(e, paused, volume, duration, currentTime) {
-        this.update(paused, volume, duration, currentTime)
+    /**
+     * 
+     * @returns {bool}
+     */
+    isFoundedVideoOk() {
+        return true
+    }
 
+    onReady(e, paused, volume, duration, currentTime) {
+        if (!this.isFoundedVideoOk()) {
+            this.window.webContents.send('EVENT_LOOK_FOR_VIDEO', null)
+
+            return
+        }
+
+        this.update(paused, volume, duration, currentTime)
         this.emit('ready', this)
+        this.window.webContents.send('EVENT_LOOK_FOR_VIDEO_HIDE', null)
     }
 
     onHide() {
