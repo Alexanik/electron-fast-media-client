@@ -4,7 +4,7 @@
   "description": "Electron based module for fastest way of media-browser client creating",
   "main": "index.js",
   "scripts": {
-    "start": "electron --inspect .",
+    "start": "electron --inspect ./index-test.js",
     "test": "NODE_ENV=test ./node_modules/.bin/mocha ./test/*.js"
   },
   "author": "Aleksandr Miroshnikov",

@@ -2,6 +2,8 @@ const { app, BrowserWindow, ipcMain, session, Menu, MenuItem } = require('electr
 const Store = require('electron-store')
 const path = require('path')
 const Url = require('url-parse')
+
+const Language = require('./src/language')
 const AudioPlayer = require('./src/audio-player')
 const VideoPlayer = require('./src/video-player')
 const TouchbarContoller = require('./src/touchbar-controller')
@@ -63,8 +65,35 @@ class FastMediaClient {
         return window
     }
 
+    createContextMenu() {
+        let menu = new Menu()
+
+        menu.append(new MenuItem({
+            label: this.language.get('On top'),
+            type: 'checkbox',
+            checked: this.mainWindow.isAlwaysOnTop(),
+            click: () => this.mainWindow.setAlwaysOnTop(!this.mainWindow.isAlwaysOnTop())
+        }))
+        menu.append(new MenuItem({
+            type: 'separator'
+        }))
+        menu.append(new MenuItem({
+            label: this.language.get('Quit'),
+            role: 'quit'
+        }))
+
+        return menu
+    }
+
     onWidevineReady(version, lastVersion) {
+        this.language = new Language(app.getLocale(), 'en')
         this.mainWindow = this.createWindow(this.type, this.options)
+        this.mainWindowContextMenu = this.createContextMenu()
+
+        this.mainWindow.webContents.on('context-menu', (e, params) => {
+            this.mainWindowContextMenu.popup(this.mainWindow, params.x, params.y)
+        })
+
         this.mainWindow.loadURL(this.store.get('startPageUrl'))
         //TODO: back right loadURL
         //this.mainWindow.loadURL('https://www.netflix.com/watch/81325589?trackId=251726442&tctx=0%2C0%2C4804aafc-bbef-40d5-b95b-25476011b6ff-84441094%2C%2C6e75bde6-0564-4371-80e6-bbbcebf89988_ROOT%2C')
@@ -85,6 +114,9 @@ class FastMediaClient {
     onMainWindowReadyToShow() {
         this.mainWindow.show()
         this.mainWindow.focus()
+
+        if (this.options?.openDevTools === true)
+            this.mainWindow.webContents.openDevTools()
         //TODO: remove open dev tools
         //this.mainWindow.webContents.openDevTools()
     }
