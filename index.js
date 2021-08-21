@@ -55,6 +55,7 @@ class FastMediaClient {
                 preload: options?.preload ?? (type === 'video' ? path.join(__dirname, 'src/video-inject.js') : path.join(__dirname, 'src/audio-inject.js'))
             }
         })
+        window.setMenu(null)
         window.once('ready-to-show', this.onMainWindowReadyToShow.bind(this))
         window.on('close', this.onMainWindowClose.bind(this))
         window.webContents.setWindowOpenHandler(({ url }) => {
