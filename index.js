@@ -5,6 +5,7 @@ const Url = require('url-parse')
 const AudioPlayer = require('./src/audio-player')
 const VideoPlayer = require('./src/video-player')
 const TouchbarContoller = require('./src/touchbar-controller')
+const Player = require('./src/player')
 
 class FastMediaClient {
     constructor(startPageUrl, type, options) {
@@ -102,3 +103,4 @@ class FastMediaClient {
 }
 
 module.exports.FastMediaClient = FastMediaClient
+module.exports.Player = Player
